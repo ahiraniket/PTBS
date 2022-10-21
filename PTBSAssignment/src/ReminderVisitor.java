@@ -14,4 +14,8 @@ public class ReminderVisitor extends NodeVisitor {
 
 	}
 
+	public void visitClassProductList(ClassProductList classProductList) {
+
+	}
+
 }
