@@ -13,14 +13,12 @@ public class Facade {
 
     private static ClassProductList theProductList = new ClassProductList();
 
-    private Person thePerson;
+    private Person thePerson = null;
 
     public boolean login(UserInfoItem userInfoItem) {
         if (login.getLogin()) {
             userInfoItem.UserType = login.getUserType();
             userInfoItem.strUserName = login.getUname();
-            thePerson.UserName = login.getUname();
-            thePerson.type = login.user_type;
             return true;
         } else {
             return false;
@@ -109,21 +107,56 @@ public class Facade {
 
     public void productOperation(UserInfoItem userInfoItem) {
         int choice = 0;
+        char loop = 'y';
         Trading trading = new Trading();
         if (userInfoItem.UserType == UserInfoItem.USER_TYPE.Buyer) {
 
             BuyerTradingMenu bmenu = new BuyerTradingMenu();
-            System.out.println("Operations:\n1. Buy\t2. Logout Enter your Choice[1-2]:");
-            Scanner in = new Scanner(System.in);
-            in.nextInt();
-            switch (choice) {
-                case 1:
-                    bmenu.ShowMenu(trading, thePerson);
-                    break;
-                case 2:
-                    break;
-                default:
-                    System.out.println();
+            while (loop == 'y') {
+                System.out.println("Operations:\n1. Buy \t2. Trade\t3. Logout \nEnter your Choice[1-2]:");
+                Scanner in = new Scanner(System.in);
+                choice = in.nextInt();
+                switch (choice) {
+                    case 1:
+                        SelectProduct();
+                        bmenu.ShowMenu(trading, thePerson);
+                        break;
+                    case 2:
+                        System.out.println("Trading functionality under progress...");
+                        productOperation(userInfoItem);
+                        break;
+                    case 3:
+                        PTBSMainClass.main(null);
+                        break;
+                    default:
+                        System.out.println();
+                }
+                System.out.println("Do you wish to continue?(y/n):");
+                loop = in.next().charAt(0);
+            }
+        } else {
+
+            SellerTradingMenu smenu = new SellerTradingMenu();
+            while (loop == 'y') {
+                System.out.println("Operations:\n1. Sell \t2. Remove\t3. Logout \nEnter your Choice[1-2]:");
+                Scanner in = new Scanner(System.in);
+                choice = in.nextInt();
+                switch (choice) {
+                    case 1:
+                        smenu.ShowMenu(trading, thePerson);
+                        break;
+                    case 2:
+                        System.out.println("Remove functionality under progress...");
+                        productOperation(userInfoItem);
+                        break;
+                    case 3:
+                        PTBSMainClass.main(null);
+                        break;
+                    default:
+                        System.out.println();
+                }
+                System.out.println("Do you wish to continue?(y/n):");
+                loop = in.next().charAt(0);
             }
         }
 

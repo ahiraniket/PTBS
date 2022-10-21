@@ -6,7 +6,6 @@ public class PTBSMainClass {
         if(facade.login(userInfoItem))
         {
             System.out.println("Login Successful " + userInfoItem.UserType);
-            facade.SelectProduct();
             facade.productOperation(userInfoItem);
         }
 
